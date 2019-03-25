@@ -1,0 +1,97 @@
+.menu-box {
+    position: relative;
+    display: inline-block;
+    margin: 50px;
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+}
+.menu-box:hover .menu {
+    background-color: transparent;
+}
+.menu-box:hover .menu::before {
+    /*在进入外层div进入span之前向上移动8px（沿y轴），比并且旋转45度*/
+    transform: translateY(8px) rotate(45deg); /*rotate属性设置角度值*/
+}
+.menu-box:hover .menu::after {
+    /*在进入span元素之后，向下移动8px，并且也倾斜45度*/
+    transform: translateY(-8px) rotate(-45deg);
+}
+.menu{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 30px;
+    height: 2px;
+    padding: 8px 0;
+    transform: translate(-50%, -50%);/*实现居中*/
+    background-clip: content-box; /* 给内容区设置了背景颜色，背景剪裁到内容框*/
+    background-color: #dddddd;
+}
+.menu::after, .menu::before {
+    position: absolute;
+    left: 0;
+    display: inline-block;
+    content:  '';
+    width: 100%;
+    height: 2px;
+    background-color: pink;
+    transition: transform 0.5s,background-color 0.5s;
+} /*背景颜色的改变和旋转的时间都设置为0.5S*/
+.menu::before {
+    top: 0;
+}/*在鼠标移入之前就将其设置到顶部形成另一根线*/
+.menu::after {
+    bottom: 0;
+}
+
+
+.pic {
+    position: relative;
+    overflow: hidden; /*清除浮动，并且成为BFC元素，内部布局不受外部影响*/
+    height: 150px;
+    width: 150px;
+    margin: 50px;
+    border-radius: 10px;
+    -webkit-perspective: 500px; /*设置该属性，子元素可以获得透视显示*/ 
+    transform-origin: 0 0; /*修改变形基准点到00位置，*/
+    transition: background-color 0.5s; /*表示背景颜色在0.5s内发货时能变化完成*/
+    /*transform: skew(-30deg);*/
+}
+.pic img {
+    position: absolute;
+    top: 0;
+    z-index: 1;
+    width: 150px;
+    height: 150px;
+    transition: opacity 0.3s; /*透明属性，在0,3s内完成过渡*/
+}
+.pic h3,.pic p {
+    position: absolute;
+    padding: 0 50px;
+    color: #ffffff;
+    opacity: 0;
+    transform:  translate3d(-200px,0,-200px);
+}
+.pic h3 {
+    bottom: 50%;
+    text-transform: uppercase;
+    font-weight: 600;
+    font-size: 16px;
+    transition: transform 0.3s cubic-bezier(0,2.3,0.8,1), opacity 0.3s;
+}
+.pic p {
+    top: 50%;
+    font-size: 14px;
+    transition: transform 0.3s 0.1s cubic-bezier(0,2.3,0.8,1), opacity 0.3s 0.1s;
+}
+.pic:hover {
+    background: #080808;
+}
+.pic:hover h3,.pic:hover p {
+    opacity: 1;
+    transform: translate3d(0,0,0);
+}
+.pic:hover img {
+    opacity: 0.5;
+}
